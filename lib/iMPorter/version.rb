@@ -1,0 +1,3 @@
+module IMPorter
+  VERSION = "0.0.1"
+end
