@@ -8,16 +8,19 @@ require 'prawn'
 require 'etc'
 
 program :name, "iMessage Exporter CLI"
-program :version, '0.0.1'
+program :version, IMPorter::VERSION
 program :description, 'Exports iMessage conversations as TEXT or PDF files'
+program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
+program :help, 'Website', 'https://github.com/noqcks/iMPorter'
+default_command :help
 
 $chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
 $user_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Application Support/AddressBook/AddressBook-v22.abcddb"
 
 command :export do |c|
-  c.syntax = 'iMPorter export'
+  c.syntax = 'export [options]'
   c.description = 'Begin the export of iMessages into a desired format'
-  c.option '-f', '--format STRING', String, 'The type of format you want the iMessages outputted to. [PDF, TXT]'
+  c.option '-f', '--format STRING', String, 'The type of format you want the iMessages outputted to [PDF, TXT]'
   c.action do |args, options|
     options.default :format => 'PDF'
 
@@ -47,7 +50,4 @@ command :export do |c|
   end
 end
 
-default_command :help
-program :help_formatter, :compact
-program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
-program :help, 'Website', 'https://github.com/noqcks/iMPorter'
+
