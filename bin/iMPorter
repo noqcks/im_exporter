@@ -1,50 +1,53 @@
-# #!/usr/bin/env ruby
+ #!/usr/bin/env ruby
 
-# require 'iMPorter'
+require 'iMPorter'
 
-# program :name, "iMessage Exporter CLI"
-# program :version, '0.0.1'
-# program :description, 'Exports iMessage conversations as TEXT or PDF files'
+require 'commander/import'
+require 'sqlite3'
+require 'prawn'
+require 'etc'
 
-# $chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
+program :name, "iMessage Exporter CLI"
+program :version, '0.0.1'
+program :description, 'Exports iMessage conversations as TEXT or PDF files'
 
-# command :export do |c|
-#   c.syntax = 'iMPorter export'
-#   c.description = 'Begin the export of iMessages into a desired format'
-#   c.option '-f', '--format STRING', String, 'The type of format you want the iMessages outputted to. [PDF, TXT]'
-#   c.action do |args, options|
-#     options.default :format => 'PDF'
-#     iMPorter::Contact.new 
-#     $chat_db.execute('select ROWID, id from handle') do |user_row|
-#       @pdf = Prawn::Document.new
-#       id = user_row[0]
-#       phone = user_row[1].delete '+'
-#       contact = Contact.new(id, phone)
-#       contact.get_messages.each do |message|
-#         if is_from_me?(message[0])
-#           if has_attachment?(message[2])
-#             write_attachment(message[3])
-#           else
-#             write_message(message[1], "me")
-#           end
-#         else
-#           if has_attachment?(message[2])
-#             write_attachment(message[3])
-#           else
-#             write_message(message[1], contact.name)
-#           end
-#         end
-#       end
-#       p contact.name
-#       @pdf.render_file "#{contact.name}.pdf"
-#     end
-#   end
-# end
+$chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
+$user_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Application Support/AddressBook/AddressBook-v22.abcddb"
 
-# default_command :help
-# program :help_formatter, :compact
-# program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
-# program :help, 'Website', 'https://github.com/noqcks/iMPorter'
+command :export do |c|
+  c.syntax = 'iMPorter export'
+  c.description = 'Begin the export of iMessages into a desired format'
+  c.option '-f', '--format STRING', String, 'The type of format you want the iMessages outputted to. [PDF, TXT]'
+  c.action do |args, options|
+    options.default :format => 'PDF'
 
-# # chatter = iMPorter::Contact.new  
-# # chatter.say_hello 
+    contact = IMPorter::Contact
+    message = IMPorter::Message
+    attachment = IMPorter::Attachment
+
+    contact.get_contact_ids.each do |contact_row|
+      $pdf = Prawn::Document.new
+      id = contact_row[0]
+      phone = contact_row[1].delete '+'
+      contact_name = contact.name(id, phone)
+      message.read(id).each do |message_row|
+        if message.is_an_attachment?(message_row[2])
+          attachment.write(message_row[3])
+        else
+          if message.is_from_me?(message_row[0])
+            message.write("me", message_row[1])
+          else
+            message.write(contact_name, message_row[1])
+          end
+        end
+      end
+      $pdf.render_file "#{contact_name}.pdf"
+    end
+
+  end
+end
+
+default_command :help
+program :help_formatter, :compact
+program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
+program :help, 'Website', 'https://github.com/noqcks/iMPorter'
