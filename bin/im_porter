@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'iMPorter'
+require 'im_porter'
 
 require 'commander/import'
 require 'sqlite3'
@@ -8,10 +8,10 @@ require 'prawn'
 require 'etc'
 
 program :name, "iMessage Exporter CLI"
-program :version, IMPorter::VERSION
+program :version, IM_Porter::VERSION
 program :description, 'Exports iMessage conversations as TEXT or PDF files'
 program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
-program :help, 'Website', 'https://github.com/noqcks/iMPorter'
+program :help, 'Website', 'https://github.com/noqcks/im_porter'
 default_command :help
 
 $chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
@@ -24,9 +24,9 @@ command :export do |c|
   c.action do |args, options|
     options.default :format => 'PDF'
 
-    contact = IMPorter::Contact
-    message = IMPorter::Message
-    attachment = IMPorter::Attachment
+    contact = IM_Porter::Contact
+    message = IM_Porter::Message
+    attachment = IM_Porter::Attachment
 
     contact.get_contact_ids.each do |contact_row|
       $pdf = Prawn::Document.new if options.format.eql? 'PDF'
