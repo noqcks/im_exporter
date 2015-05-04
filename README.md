@@ -1,5 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/im_exporter.svg)](http://badge.fury.io/rb/im_exporter)
-[![Gem Version](https://badge.fury.io/rb/im_exporter.svg)](http://badge.fury.io/rb/im_exporter)
+[![Dependency Status](https://gemnasium.com/noqcks/im_exporter.svg)](https://gemnasium.com/noqcks/im_exporter)
 
 # im_exporter CLI
 
