@@ -1,15 +1,26 @@
-# im_porter CLI
+# im_exporter CLI
 
-im_porter is an **iM**esasge ex**porter** that backs up iMessage conversations to PDF or TXT files for easy reading and search
+im_porter is an **iM**esasge **exporter** that backs up iMessage conversations to PDF or TXT files for easy reading and search
 
 ## Installation
 
 Install from the command line via
 
-  $ gem install im_porter
+  $ gem install im_exporter
 
 ## Usage
 
-```im_porter export --format PDF``` 
+```im_exporter export --format PDF``` 
 
 will output iMessage conversations in PDF documents in the pwd
+
+## TODO
+
+1. format PDF messages nicely so they look like a real iMessage conversation
+2. refactor code so it doesn't look like complete shit
+
+## License
+
+Copyright (C) 2015 Ben Visser
+
+Released under the MIT License.

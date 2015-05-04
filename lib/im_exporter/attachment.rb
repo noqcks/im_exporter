@@ -1,4 +1,4 @@
-module IM_Porter
+module IM_Exporter
   module Attachment
     def self.write(attachment_id)
       $chat_db.execute('select a.filename from attachment as a join message as m on m.date = a.created_date where m.rowid=?', attachment_id) do |file_dir|

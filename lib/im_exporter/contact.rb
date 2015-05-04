@@ -1,4 +1,4 @@
-module IM_Porter
+module IM_Exporter
   module Contact
     def self.parse_contact_name_from_string(row)
       return row.select{|element| row.count(element) > 1 }.uniq.select{ |i| i[/[a-zA-Z]/] }.join(' ')

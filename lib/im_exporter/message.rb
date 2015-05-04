@@ -1,4 +1,4 @@
-module IM_Porter
+module IM_Exporter
   module Message
     def self.write(user, message, file_name, type)
       if type.eql? 'PDF'
