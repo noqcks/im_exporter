@@ -6,7 +6,7 @@ im_porter is an **iM**esasge **exporter** that backs up iMessage conversations t
 
 Install from the command line via
 
-  $ gem install im_exporter
+```gem install im_exporter```
 
 ## Usage
 
