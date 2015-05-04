@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/im_exporter.svg)](http://badge.fury.io/rb/im_exporter)
+[![Gem Version](https://badge.fury.io/rb/im_exporter.svg)](http://badge.fury.io/rb/im_exporter)
+
 # im_exporter CLI
 
 im_porter is an **iM**esasge **exporter** that backs up iMessage conversations to PDF or TXT files for easy reading and searching
