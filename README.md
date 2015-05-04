@@ -1,6 +1,6 @@
 # im_exporter CLI
 
-im_porter is an **iM**esasge **exporter** that backs up iMessage conversations to PDF or TXT files for easy reading and search
+im_porter is an **iM**esasge **exporter** that backs up iMessage conversations to PDF or TXT files for easy reading and searching
 
 ## Installation
 
