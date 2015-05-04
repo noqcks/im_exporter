@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ben Visser"]
   spec.email         = ["theodore.r.visser@gmail.com"]
   spec.summary       = %q{iMessage Exporter}
-  spec.description   = %q{Export iMessages into TXT or PDF}
-  spec.homepage      = "http://noqcks.github.io/im_porter"
+  spec.description   = %q{Export iMessage conversations into TXT or PDF files}
+  spec.homepage      = "https://github.com/noqcks/im_porter"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
