@@ -18,6 +18,7 @@ will output iMessage conversations in PDF documents in the pwd
 
 1. format PDF messages nicely so they look like a real iMessage conversation
 2. refactor code so it doesn't look like complete shit
+3. limit export to a specific phone number or contact name
 
 ## License
 
