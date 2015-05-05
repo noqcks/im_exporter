@@ -1,34 +1,30 @@
 #!/usr/bin/env ruby
 
 require 'im_exporter'
-
 require 'commander/import'
 require 'sqlite3'
 require 'prawn'
 require 'etc'
 
-program :name, "iMessage Exporter CLI"
-program :version, IM_Exporter::VERSION
+program :name, 'iMessage Exporter CLI'
+program :version, IMExporter::VERSION
 program :description, 'Exports iMessage conversations as TEXT or PDF files'
 program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
 program :help, 'Website', 'https://github.com/noqcks/im_exporter'
 default_command :help
 
-$chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
-$user_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Application Support/AddressBook/AddressBook-v22.abcddb"
-
 command :export do |c|
   c.syntax = 'export [options]'
   c.description = 'Begin the export of iMessages into a desired format'
   c.option '-f', '--format STRING', String, 'The type of format you want the iMessages outputted to [PDF, TXT]'
-  c.action do |args, options|
-    options.default :format => 'PDF'
+  c.action do |_, options|
+    options.default format: 'PDF'
 
-    contact = IM_Exporter::Contact
-    message = IM_Exporter::Message
-    attachment = IM_Exporter::Attachment
+    contact = IMExporter::Contact
+    message = IMExporter::Message
+    attachment = IMExporter::Attachment
 
-    contact.get_contact_ids.each do |contact_row|
+    contact.contact_ids.each do |contact_row|
 
       $pdf = Prawn::Document.new if options.format.eql? 'PDF'
       id = contact_row[0]
@@ -37,7 +33,7 @@ command :export do |c|
       messages = 0
       message.read(id).each do |message_row|
         messages += 1
-        message.parse(message_row, contact_name, options.format)
+        message.write_logic(message_row, contact_name, options.format)
       end
       if options.format.eql? 'PDF'
         $pdf.render_file "#{contact_name}.pdf" unless messages.eql? 0
