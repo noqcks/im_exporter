@@ -1,5 +1,3 @@
-@chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
-
 # Export iMessage conversations into TXT or PDF files
 module IMExporter
   # A module to handle messages from the iMessage sqlite database
@@ -19,18 +17,18 @@ module IMExporter
     def self.read(id)
       select_rows = 'is_from_me, text, cache_has_attachments, rowid, cache_roomnames'
       query = "select #{select_rows} from message where handle_id= ?"
-      @chat_db.execute(query, id)
+      $chat_db.execute(query, id)
     end
 
     # the logic behind how things get written to the document
     def self.write_logic(message_row, contact_name, file_type)
-      if message.is_an_attachment?(message_row[2])
-        attachment.write(message_row[3]) if file_type.eql? 'PDF'
+      if self.is_an_attachment?(message_row[2])
+        IMExporter::Attachment.write(message_row[3]) if file_type.eql? 'PDF'
       else
-        if message.is_from_me?(message_row[0])
-          message.write('me', message_row[1], contact_name, file_type)
+        if self.is_from_me?(message_row[0])
+          self.write('me', message_row[1], contact_name, file_type)
         else
-          message.write(contact_name, message_row[1], contact_name, file_type)
+          self.write(contact_name, message_row[1], contact_name, file_type)
         end
       end if message_row[4].nil?
     end

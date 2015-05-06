@@ -2,9 +2,9 @@
 
 require 'im_exporter'
 require 'commander/import'
-require 'sqlite3'
 require 'prawn'
 require 'etc'
+require 'sqlite3'
 
 program :name, 'iMessage Exporter CLI'
 program :version, IMExporter::VERSION
@@ -12,6 +12,9 @@ program :description, 'Exports iMessage conversations as TEXT or PDF files'
 program :help, 'Authors', 'Ben Visser <theodore.r.visser@gmail.com>'
 program :help, 'Website', 'https://github.com/noqcks/im_exporter'
 default_command :help
+
+$user_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Application Support/AddressBook/AddressBook-v22.abcddb"
+$chat_db = SQLite3::Database.new "/Users/#{Etc.getlogin}/Library/Messages/chat.db"
 
 command :export do |c|
   c.syntax = 'export [options]'
