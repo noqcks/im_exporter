@@ -26,9 +26,9 @@ module IMExporter
         IMExporter::Attachment.write(message_row[3]) if file_type.eql? 'PDF'
       else
         if self.is_from_me?(message_row[0])
-          self.write('me', message_row[1], contact_name, file_type)
+          write('me', message_row[1], contact_name, file_type)
         else
-          self.write(contact_name, message_row[1], contact_name, file_type)
+          write(contact_name, message_row[1], contact_name, file_type)
         end
       end if message_row[4].nil?
     end

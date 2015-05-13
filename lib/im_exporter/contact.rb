@@ -13,9 +13,9 @@ module IMExporter
       query = 'select ZSTRINGFORINDEXING from ZABCDCONTACTINDEX'
       $user_db.execute(query) do |contact|
         row = contact.join('').split(' ')
-        contact_name = self.parse_contact_name_from_string(row)
+        contact_name = parse_contact_name_from_string(row)
         contact_phone = row.last
-        if contact_phone.eql? phone then name = contact_name end
+        name = contact_name if contact_phone.eql? phone
       end
       name
     end
